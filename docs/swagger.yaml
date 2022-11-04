@@ -1,0 +1,196 @@
+definitions:
+  models.Todo:
+    properties:
+      complete:
+        type: boolean
+      content:
+        maxLength: 255
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      todo_attrs:
+        $ref: '#/definitions/models.TodoAttrs'
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    required:
+    - complete
+    - content
+    - id
+    - todo_attrs
+    - user_id
+    type: object
+  models.TodoAttrs:
+    properties:
+      color:
+        type: string
+    type: object
+info:
+  contact:
+    email: your@mail.com
+    name: API Support
+  description: This is an auto-generated API Docs.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: API
+  version: "1.0"
+paths:
+  /api/v1/todos:
+    delete:
+      consumes:
+      - application/json
+      description: Delete todo by given ID.
+      parameters:
+      - description: Todo ID
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: no content
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: delete todo by given ID
+      tags:
+      - Todo
+    get:
+      consumes:
+      - application/json
+      description: Get all existing todos.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Todo'
+            type: array
+      summary: get all existing todos.
+      tags:
+      - Todos
+    post:
+      consumes:
+      - application/json
+      description: Create a new todo.
+      parameters:
+      - description: Content
+        in: body
+        name: content
+        required: true
+        schema:
+          type: string
+      - description: Content
+        in: body
+        name: complete
+        required: true
+        schema:
+          type: boolean
+      - description: Todo attributes
+        in: body
+        name: todo_attrs
+        required: true
+        schema:
+          $ref: '#/definitions/models.TodoAttrs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Todo'
+      security:
+      - ApiKeyAuth: []
+      summary: create a new todo.
+      tags:
+      - Todo
+    put:
+      consumes:
+      - application/json
+      description: Update todo
+      parameters:
+      - description: Todo ID
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Content
+        in: body
+        name: content
+        required: true
+        schema:
+          type: string
+      - description: Complete
+        in: body
+        name: complete
+        required: true
+        schema:
+          type: boolean
+      - description: Todo attributes
+        in: body
+        name: todo_attrs
+        required: true
+        schema:
+          $ref: '#/definitions/models.TodoAttrs'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: update todo
+      tags:
+      - Todo
+  /api/v1/todos/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get book by given ID.
+      parameters:
+      - description: Todo ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Todo'
+      summary: get book by given ID.
+      tags:
+      - Todo
+  /api/v1/token/new:
+    get:
+      consumes:
+      - application/json
+      description: Create a new access token.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: create a new access token
+      tags:
+      - Token
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
